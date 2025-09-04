@@ -1,14 +1,18 @@
 import { FaGithub, FaLinkedin, FaGlobe,FaDownload } from "react-icons/fa";
 import { useState,useEffect } from "react";
+import React, { lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import Nav from "../Componente/Nav";
 import CV from"../assets/FELLOUS EHSAIN Rania_CV.pdf";
 import developerImage from "../assets/Développeuse Full-Stack au Bureau (1).png"
-import Education from "./Education";
-import Contact from "./Contact";
-import Skills from "./Skills";
-import Services from "./Servics";
-import About from "./About";
+const About = lazy(() => import("./About"));
+const Services = lazy(() => import("./Services"));
+const Education = lazy(() => import("./Education"));
+const Projects = lazy(() => import("./Projects"));
+const Skills = lazy(() => import("./Skills"));
+const Contact = lazy(() => import("./Contact"));
 const titles = [
  'Front-End\nDeveloper',
   "Back-End\nDeveloper",
@@ -36,6 +40,8 @@ const Home = ({id} ) => {
       return () => clearTimeout(timeout);
     }
   }, [charIndex, currentTitleIndex]);
+ 
+  
   return (
     <>
       <Nav />
@@ -43,7 +49,9 @@ const Home = ({id} ) => {
 
         {/* Texte à gauche */}
         <div className="w-full md:w-1/2 text-left space-y-6 ml-10">
-        <p className="font-bold  text-2xl text-gray-500">Hi,I am Rania</p>
+         {/* Cercle lumineux uniquement en dark */}
+  <div className="hidden dark:block absolute -top-20 -left-10 w-80 h-80 rounded-full bg-blue-400 opacity-30 blur-3xl"></div>
+        <p className="font-bold  text-2xl text-gray-500 dark:text-gray-300">Hi,I am Rania</p>
         <h1 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-ocean-slate via-steel-sky to-peach-cream bg-clip-text text-transparent h-20">
         {displayedText.split("\n").map((line, index) => (
     <span key={index}>
@@ -54,8 +62,8 @@ const Home = ({id} ) => {
       <span className="animate-pulse">|</span>
     </h1>
 
-          <p className="text-gray-700 text-lg md:text-xl">
-          <span className="font-bold text-midnight-slate ">I'm a creative developer</span> - passionate about modern web development and user-focused design.
+          <p className="text-gray-700 dark:text-gray-300 text-lg md:text-xl">
+          <span className="font-bold text-midnight-slate dark:text-blue-steel">I'm a creative developer</span> - passionate about modern web development and user-focused design.
           </p>
 
         
@@ -114,29 +122,36 @@ const Home = ({id} ) => {
           </div>
         </div>
 
-        {/* Image à droite */}
-        <div className="w-full md:w-1/2 mb-8 md:mb-0 pr-10 flex justify-center relative">
-  {/* Effet de fond lumineux derrière l'image */}
-  <div className="absolute w-80 h-80 md:w-[400px] md:h-[400px] rounded-full blur-4xl bg-gradient-to-br from-ocean-slate via-blue-steel to-peach-cream opacity-30 animate-pulse z-0"></div>
+        <div className="w-full md:w-1/2 mb-8 md:mb-0 flex justify-center mb-16 relative pr-0 md:pr-10">
+ {/* Effet de fond lumineux derrière l'image */}
+<div className="absolute w-80 h-80 md:w-[400px] md:h-[400px] rounded-full blur-4xl 
+  bg-gradient-to-br from-ocean-slate via-blue-steel to-peach-cream 
+  opacity-30 animate-pulse z-0
+  dark:from-ocean-slate dark:via-blue-steel dark:to-peach-cream dark:opacity-50
+"></div>
+
 
   {/* Image */}
-  <img
-    src={developerImage}
-    alt="Full-Stack Web Developer"
-    className="w-64 md:w-96 relative z-10"
-    loading="lazy"
-  />
+  <LazyLoadImage
+  src={developerImage}
+  alt="Full-Stack Web Developer"
+  className="w-64 md:w-96 relative z-10"
+  effect="blur" // effet de flou pendant le chargement
+/>
 </div>
 
+
       </section>
-      <About id="about"/>
-      <Services id="services"/>
-      <Education id="education"/>
-      <Skills id="skills"/>
-      <Contact id="contact"/>
+      <Suspense fallback={null}>
+        <About id="about" />
+        <Services id="services" />
+        <Education id="education" />
+        <Projects id="projects" />
+        <Skills id="skills" />
+        <Contact id="contact" />
+      </Suspense>
     </>
   );
 };
 
 export default Home;
-
