@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 const TimelineSection = ({ id,title, data, forceSide }) => {
   const [isClicked, setIsClicked] = useState(null);
 
   return (
     <div id={id}  className="relative w-full max-w-6xl mx-auto py-10 px-3 sm:px-6">
-      <p className="text-sm sm:text-md text-gray-500 text-center">Here's My</p>
+      <p className="text-sm sm:text-md text-gray-500 dark:text-gray-300 text-center">Here's My</p>
       <h1 className="text-xl sm:text-2xl lg:text-2xl text-blue-steel text-center font-bold pb-16">
         {title}
       </h1>
-
+        
       {/* Ligne verticale */}
       <div className="absolute left-1/2 transform -translate-x-1/2 top-28 bottom-0 border-l-2 border-steel-sky dark:border-gray-600 hidden sm:block"></div>
 
@@ -119,3 +120,4 @@ const EducationAndCertificates = ({id} ) => {
 };
 
 export default EducationAndCertificates;
+
