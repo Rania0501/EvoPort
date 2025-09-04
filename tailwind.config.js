@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class', // <-- ajouté pour activer le dark mode via la classe "dark"
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -15,17 +16,11 @@ export default {
         'ocean-slate': '#3F6E8C',
         'steel-sky': '#c9d8e1e7',
         'frosted-blue': 'rgba(159, 183, 198, 0.87)',
-
-
       },
       animation: {
         'spin-slow': 'spin 8s linear infinite',
       },
-   
-      
     },
-   
   },
   plugins: [],
 }
-
