@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-scroll"; 
-import { FaHome, FaProjectDiagram, FaTools, FaEnvelope, FaGraduationCap, FaUser } from "react-icons/fa";
+import { FaHome, FaProjectDiagram, FaTools, FaEnvelope, FaGraduationCap, FaUser} from "react-icons/fa";
 import { MdMiscellaneousServices } from "react-icons/md";
+import { useState } from "react";
+import { FiSun, FiMoon } from "react-icons/fi";
 
 function Nav() {
   const navItems = [
@@ -14,62 +16,82 @@ function Nav() {
     { label: "Contact", icon: <FaEnvelope />, target: "contact" },
   ];
 
+    const [darkMode, setDarkMode] = useState(false);
+  
+    const toggleDarkMode = () => {
+      setDarkMode(!darkMode);
+      document.documentElement.classList.toggle("dark", !darkMode);
+    };
   return (
-    <nav className="bg-white sticky top-0 z-50 " aria-label="Main navigation">
+    <nav className="bg-white dark:bg-gray-900 sticky top-0 z-50 text-gray-600 dark:text-gray-300" aria-label="Main navigation">
 
-        {/* Logo */}
-       
+
+
 
         {/* Navigation Desktop */}
         <div className="hidden sm:flex items-center mr-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2 ml-2 pr-14 sm:ml-7">
-          <img src="/Image.jpeg" alt="Logo" className="h-10 w-auto object-contain" />
-          <span className="text-xl font-bold text-ocean-slate hidden sm:inline">EvoPort</span>
+          <img src="/evoport.svg" alt="Logo" className="h-10 w-auto object-contain" />
+          <span className="text-xl font-bold text-ocean-slate dark:text-blue-steel hidden sm:inline">EvoPort</span>
         </div>
-          <ul className="flex space-x-8 text-sm font-medium text-gray-600">
-            {navItems.map(({ label, icon , target }) => (
-              <li key={label}>
-                 <Link
-                  to={target}
-                  smooth={true}
-                  duration={600}
-                  offset={-70} 
-                  className="flex items-center gap-1 cursor-pointer hover:text-ocean-slate hover:underline underline-offset-4 rounded px-2 py-1 transition"
-                >
-                  {icon}
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <ul className="flex space-x-8 text-sm font-medium text-gray-600 dark:text-gray-300">
+  {navItems.map(({ label, icon , target }) => (
+    <li key={label}>
+      <Link
+        to={target}
+        smooth={true}
+        duration={600}
+        offset={-70} 
+        className="flex items-center gap-1 cursor-pointer hover:text-ocean-slate hover:underline underline-offset-4 rounded px-2 py-1 transition dark:hover:text-blue-steel"
+      >
+        {icon}
+        {label}
+      </Link>
+    </li>
+  ))}
+  <button onClick={toggleDarkMode} className="text-2xl ml-2">
+    {darkMode ? <FiSun className="text-yellow-500" /> : <FiMoon className="text-gray-400" />}
+  </button>
+</ul>
+
+         
         </div>
+        
       </div>
 
-      {/* Navigation Mobile (logo + icônes sur la même ligne) */}
-<div className="sm:hidden flex items-center justify-between bg-white shadow-lg rounded-full px-3 py-2 my-4 mx-2 animated-radial-border relative z-10">
-  {/* Logo mobile */}
-  <div className="flex items-center gap-1">
-    <img src="/Image.jpeg" alt="Logo" className="h-8 w-auto object-contain" />
-    <span className="text-lg font-bold text-ocean-slate"></span>
-  </div>
+    
+
 
   {/* Icons mobile */}
   <div className="flex items-center gap-3">
+  <div className="sm:hidden flex items-center justify-between bg-white dark:bg-gray-900 shadow-lg rounded-full px-3 py-2 my-4 mx-2 animated-radial-border relative z-10">
+  <div className="flex items-center gap-1">
+    <img src="/evoport.svg" alt="Logo" className="h-8 w-auto object-contain" />
+    <span className="text-lg font-bold text-ocean-slate dark:text-gray-300"></span>
+  </div>
+
+  <div className="flex items-center gap-3">
     {navItems.map(({ label, icon, target  }) => (
-        <Link
+      <Link
         key={label}
         to={target}
         smooth={true}
         duration={600}
         offset={-70}
-        className="flex flex-col items-center justify-center w-9 h-9 text-gray-600 hover:text-ocean-slate transition rounded-full cursor-pointer"
+        className="flex flex-col items-center justify-center w-9 h-9 text-gray-600 dark:text-gray-300 hover:text-ocean-slate transition rounded-full cursor-pointer"
       >
         {icon}
       </Link>
     ))}
+    <button onClick={toggleDarkMode} className="text-2xl">
+      {darkMode ? <FiSun className="text-yellow-500" /> : <FiMoon className="text-gray-400" />}
+    </button>
   </div>
 </div>
+
+  </div>
+
 
 {/* Gradient Border Animation */}
 <style>{`
@@ -150,5 +172,6 @@ function Nav() {
 }
 
 export default Nav;
+
 
 
